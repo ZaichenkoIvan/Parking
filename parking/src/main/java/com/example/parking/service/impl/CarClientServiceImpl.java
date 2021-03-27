@@ -1,15 +1,16 @@
 package com.example.parking.service.impl;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.parking.domain.CarClientDTO;
 import com.example.parking.entity.CarClientEntity;
 import com.example.parking.exception.IdUncorrectedRuntimeException;
 import com.example.parking.repository.CarClientRepository;
@@ -27,35 +28,52 @@ public class CarClientServiceImpl implements CarClientService {
 
 	private CarClientRepository carClientRepository;
 
+	private ModelMapper modelMapper;
+
 	@Override
-	public CarClientEntity save(CarClientEntity carClientEntity) {
-		return carClientRepository.save(carClientEntity);
+	public CarClientDTO save(CarClientDTO carClientDTO) {
+		CarClientEntity carClientEntity = mapCarClientDTOToEntity(carClientDTO);
+		return mapCarClientEntityToDTO(carClientRepository.save(carClientEntity));
 	}
 
 	@Override
-	public CarClientEntity findById(Long id) {
+	public CarClientDTO findById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		Optional<CarClientEntity> carClient = carClientRepository.findById(id);
 		if (carClient.isPresent()) {
-			return carClient.get();
+			return mapCarClientEntityToDTO(carClient.get());
 		}
 		throw new IdUncorrectedRuntimeException(IdServiceUtil.UNCORRECTED_ID);
 	}
 
 	@Override
-	public List<CarClientEntity> findAll() {
-		return carClientRepository.findAll();
+	public List<CarClientDTO> findAll() {
+		List<CarClientEntity> carClientsEntities = carClientRepository.findAll();
+		List<CarClientDTO> carClientDTOs = new ArrayList<>();
+		for (CarClientEntity carClientsEntity : carClientsEntities) {
+			carClientDTOs.add(mapCarClientEntityToDTO(carClientsEntity));
+		}
+		return carClientDTOs;
 	}
 
 	@Override
 	@Transactional
-	public CarClientEntity update(CarClientEntity carClientEntity) {
-		return entityManager.merge(carClientEntity);
+	public CarClientDTO update(CarClientDTO carClientDTO) {
+		CarClientEntity carClientEntity = mapCarClientDTOToEntity(carClientDTO);
+		return mapCarClientEntityToDTO(entityManager.merge(carClientEntity));
 	}
 
 	@Override
 	public void deleteById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		carClientRepository.deleteById(id);
+	}
+
+	private CarClientDTO mapCarClientEntityToDTO(CarClientEntity carClientEntity) {
+		return modelMapper.map(carClientEntity, CarClientDTO.class);
+	}
+
+	private CarClientEntity mapCarClientDTOToEntity(CarClientDTO carClientDTO) {
+		return modelMapper.map(carClientDTO, CarClientEntity.class);
 	}
 }

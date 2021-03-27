@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.parking.entity.ParkingEntity;
+import com.example.parking.domain.ParkingDTO;
 import com.example.parking.service.ParkingService;
 
 import lombok.AllArgsConstructor;
@@ -18,23 +18,23 @@ public class ParkingController {
 	private final ParkingService parkingService;
 
 	@GetMapping("/")
-	public List<ParkingEntity> showAll() {
+	public List<ParkingDTO> showAll() {
 		return parkingService.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public ParkingEntity showById(@PathVariable("id") Long id) {
+	public ParkingDTO showById(@PathVariable("id") Long id) {
 		return parkingService.findById(id);
 	}
 
 	@PostMapping("/")
-	public ParkingEntity create(@RequestBody ParkingEntity parkingEntity) {
-		return parkingService.save(parkingEntity);
+	public ParkingDTO create(@RequestBody ParkingDTO parkingDTO) {
+		return parkingService.save(parkingDTO);
 	}
 
 	@PutMapping("/{id}")
-	public ParkingEntity edit(@RequestBody ParkingEntity parkingEntity) {
-		return parkingService.update(parkingEntity);
+	public ParkingDTO edit(@RequestBody ParkingDTO parkingDTO) {
+		return parkingService.update(parkingDTO);
 	}
 
 	@DeleteMapping("/{id}")

@@ -2,17 +2,17 @@ package com.example.parking.service;
 
 import java.util.List;
 
-import com.example.parking.entity.CouponEntity;
+import com.example.parking.domain.CouponDTO;
 
 
 public interface CouponService {
-	CouponEntity save(CouponEntity couponEntity);
+	CouponDTO save(CouponDTO couponDTO);
 
-	CouponEntity findById(Long id);
+	CouponDTO findById(Long id);
 
-	List<CouponEntity> findAll();
+	List<CouponDTO> findAll();
 
-	CouponEntity update(CouponEntity couponEntity);
+	CouponDTO update(CouponDTO couponDTO);
 
 	void deleteById(Long id);
 }

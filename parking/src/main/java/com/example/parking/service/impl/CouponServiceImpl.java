@@ -1,15 +1,16 @@
 package com.example.parking.service.impl;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.parking.domain.CouponDTO;
 import com.example.parking.entity.CouponEntity;
 import com.example.parking.exception.IdUncorrectedRuntimeException;
 import com.example.parking.repository.CouponRepository;
@@ -27,36 +28,53 @@ public class CouponServiceImpl implements CouponService {
 
 	private CouponRepository couponRepository;
 
+	private ModelMapper modelMapper;
+
 	@Override
-	public CouponEntity save(CouponEntity couponEntity) {
-		return couponRepository.save(couponEntity);
+	public CouponDTO save(CouponDTO couponDTO) {
+		CouponEntity couponEntity = mapCarDTOToEntity(couponDTO);
+		return mapCarEntityToDTO(couponRepository.save(couponEntity));
 	}
 
 	@Override
-	public CouponEntity findById(Long id) {
+	public CouponDTO findById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		Optional<CouponEntity> couponEntity = couponRepository.findById(id);
 		if (couponEntity.isPresent()) {
-			return couponEntity.get();
+			return mapCarEntityToDTO(couponEntity.get());
 		}
 		throw new IdUncorrectedRuntimeException(IdServiceUtil.UNCORRECTED_ID);
 	}
 
 	@Override
-	public List<CouponEntity> findAll() {
-		return couponRepository.findAll();
+	public List<CouponDTO> findAll() {
+		List<CouponEntity> couponEntities = couponRepository.findAll();
+		List<CouponDTO> couponDTOS = new ArrayList<>();
+		for (CouponEntity couponEntity : couponEntities) {
+			couponDTOS.add(mapCarEntityToDTO(couponEntity));
+		}
+		return couponDTOS;
 	}
 
 	@Override
 	@Transactional
-	public CouponEntity update(CouponEntity couponEntity) {
-		return entityManager.merge(couponEntity);
+	public CouponDTO update(CouponDTO couponDTO) {
+		CouponEntity couponEntity = mapCarDTOToEntity(couponDTO);
+		return mapCarEntityToDTO(entityManager.merge(couponEntity));
 	}
 
 	@Override
 	public void deleteById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		couponRepository.deleteById(id);
+	}
+
+	private CouponDTO mapCarEntityToDTO(CouponEntity couponEntity) {
+		return modelMapper.map(couponEntity, CouponDTO.class);
+	}
+
+	private CouponEntity mapCarDTOToEntity(CouponDTO couponDTO) {
+		return modelMapper.map(couponDTO, CouponEntity.class);
 	}
 
 }

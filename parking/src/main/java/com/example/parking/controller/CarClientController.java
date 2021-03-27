@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.parking.entity.CarClientEntity;
+import com.example.parking.domain.CarClientDTO;
 import com.example.parking.service.CarClientService;
 
 import lombok.AllArgsConstructor;
@@ -18,23 +18,23 @@ public class CarClientController {
 	private final CarClientService carClientService;
 
 	@GetMapping("/")
-	public List<CarClientEntity> showAll() {
+	public List<CarClientDTO> showAll() {
 		return carClientService.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public CarClientEntity showById(@PathVariable("id") Long id) {
+	public CarClientDTO showById(@PathVariable("id") Long id) {
 		return carClientService.findById(id);
 	}
 
 	@PostMapping("/")
-	public CarClientEntity create(@RequestBody CarClientEntity carClientEntity) {
-		return carClientService.save(carClientEntity);
+	public CarClientDTO create(@RequestBody CarClientDTO carClientDTO) {
+		return carClientService.save(carClientDTO);
 	}
 
 	@PutMapping("/{id}")
-	public CarClientEntity edit(@RequestBody CarClientEntity carClientEntity) {
-		return carClientService.update(carClientEntity);
+	public CarClientDTO edit(@RequestBody CarClientDTO carClientDTO) {
+		return carClientService.update(carClientDTO);
 	}
 
 	@DeleteMapping("/{id}")

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.parking.entity.CarEntity;
+import com.example.parking.domain.CarDTO;
 import com.example.parking.service.CarService;
 
 import lombok.AllArgsConstructor;
@@ -18,23 +18,23 @@ public class CarController {
 	private final CarService carService;
 
 	@GetMapping("/")
-	public List<CarEntity> showAll() {
+	public List<CarDTO> showAll() {
 		return carService.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public CarEntity showById(@PathVariable("id") Long id) {
+	public CarDTO showById(@PathVariable("id") Long id) {
 		return carService.findById(id);
 	}
 
 	@PostMapping("/")
-	public CarEntity create(@RequestBody CarEntity carEntity) {
-		return carService.save(carEntity);
+	public CarDTO create(@RequestBody CarDTO carDTO) {
+		return carService.save(carDTO);
 	}
 
 	@PutMapping("/{id}")
-	public CarEntity edit(@RequestBody CarEntity carEntity) {
-		return carService.update(carEntity);
+	public CarDTO edit(@RequestBody CarDTO carDTO) {
+		return carService.update(carDTO);
 	}
 
 	@DeleteMapping("/{id}")

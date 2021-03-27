@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.parking.domain.CouponDTO;
 import com.example.parking.entity.CouponEntity;
 import com.example.parking.service.CouponService;
 
@@ -18,23 +19,23 @@ public class CouponController {
 	private final CouponService couponService;
 
 	@GetMapping("/")
-	public List<CouponEntity> showAll() {
+	public List<CouponDTO> showAll() {
 		return couponService.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public CouponEntity showById(@PathVariable("id") Long id) {
+	public CouponDTO showById(@PathVariable("id") Long id) {
 		return couponService.findById(id);
 	}
 
 	@PostMapping("/")
-	public CouponEntity create(@RequestBody CouponEntity couponEntity) {
-		return couponService.save(couponEntity);
+	public CouponDTO create(@RequestBody CouponDTO couponDTO) {
+		return couponService.save(couponDTO);
 	}
 
 	@PutMapping("/{id}")
-	public CouponEntity edit(@RequestBody CouponEntity couponEntity) {
-		return couponService.update(couponEntity);
+	public CouponDTO edit(@RequestBody CouponDTO couponDTO) {
+		return couponService.update(couponDTO);
 	}
 
 	@DeleteMapping("/{id}")

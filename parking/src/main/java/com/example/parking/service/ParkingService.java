@@ -2,17 +2,17 @@ package com.example.parking.service;
 
 import java.util.List;
 
-import com.example.parking.entity.ParkingEntity;
+import com.example.parking.domain.ParkingDTO;
 
 
 public interface ParkingService {
-	ParkingEntity save(ParkingEntity parkingEntity);
+	ParkingDTO save(ParkingDTO parkingDTO);
 
-	ParkingEntity findById(Long id);
+	ParkingDTO findById(Long id);
 
-	List<ParkingEntity> findAll();
+	List<ParkingDTO> findAll();
 
-	ParkingEntity update(ParkingEntity parkingEntity);
+	ParkingDTO update(ParkingDTO parkingDTO);
 
 	void deleteById(Long id);
 }

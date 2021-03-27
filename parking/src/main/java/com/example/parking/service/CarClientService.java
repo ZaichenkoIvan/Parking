@@ -2,17 +2,17 @@ package com.example.parking.service;
 
 import java.util.List;
 
-import com.example.parking.entity.CarClientEntity;
+import com.example.parking.domain.CarClientDTO;
 
 
 public interface CarClientService {
-	CarClientEntity save(CarClientEntity carClientEntity);
+	CarClientDTO save(CarClientDTO carClientDTO);
 
-	CarClientEntity findById(Long id);
+	CarClientDTO findById(Long id);
 
-	List<CarClientEntity> findAll();
+	List<CarClientDTO> findAll();
 
-	CarClientEntity update(CarClientEntity carClientEntity);
+	CarClientDTO update(CarClientDTO carClientEntity);
 
 	void deleteById(Long id);
 }

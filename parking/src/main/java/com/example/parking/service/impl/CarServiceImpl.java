@@ -1,15 +1,16 @@
 package com.example.parking.service.impl;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.parking.domain.CarDTO;
 import com.example.parking.entity.CarEntity;
 import com.example.parking.exception.IdUncorrectedRuntimeException;
 import com.example.parking.repository.CarRepository;
@@ -27,35 +28,52 @@ public class CarServiceImpl implements CarService {
 
 	private CarRepository carRepository;
 
+	private ModelMapper modelMapper;
+
 	@Override
-	public CarEntity save(CarEntity carEntity) {
-		return carRepository.save(carEntity);
+	public CarDTO save(CarDTO carDTO) {
+		CarEntity carEntity = mapCarDTOToEntity(carDTO);
+		return mapCarEntityToDTO(carRepository.save(carEntity));
 	}
 
 	@Override
-	public CarEntity findById(Long id) {
+	public CarDTO findById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		Optional<CarEntity> car = carRepository.findById(id);
 		if (car.isPresent()) {
-			return car.get();
+			return mapCarEntityToDTO(car.get());
 		}
 		throw new IdUncorrectedRuntimeException(IdServiceUtil.UNCORRECTED_ID);
 	}
 
 	@Override
-	public List<CarEntity> findAll() {
-		return carRepository.findAll();
+	public List<CarDTO> findAll() {
+		List<CarEntity> carEntities = carRepository.findAll();
+		List<CarDTO> carClientDTOS = new ArrayList<>();
+		for (CarEntity carEntity : carEntities) {
+			carClientDTOS.add(mapCarEntityToDTO(carEntity));
+		}
+		return carClientDTOS;
 	}
 
 	@Override
 	@Transactional
-	public CarEntity update(CarEntity carEntity) {
-		return entityManager.merge(carEntity);
+	public CarDTO update(CarDTO carDTO) {
+		CarEntity carEntity = mapCarDTOToEntity(carDTO);
+		return mapCarEntityToDTO(entityManager.merge(carEntity));
 	}
 
 	@Override
 	public void deleteById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		carRepository.deleteById(id);
+	}
+
+	private CarDTO mapCarEntityToDTO(CarEntity carEntity) {
+		return modelMapper.map(carEntity, CarDTO.class);
+	}
+
+	private CarEntity mapCarDTOToEntity(CarDTO carDTO) {
+		return modelMapper.map(carDTO, CarEntity.class);
 	}
 }

@@ -1,15 +1,16 @@
 package com.example.parking.service.impl;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.parking.domain.ClientDTO;
 import com.example.parking.entity.ClientEntity;
 import com.example.parking.exception.IdUncorrectedRuntimeException;
 import com.example.parking.repository.ClientRepository;
@@ -27,35 +28,52 @@ public class ClientServiceImpl implements ClientService {
 
 	private ClientRepository clientRepository;
 
+	private ModelMapper modelMapper;
+
 	@Override
-	public ClientEntity save(ClientEntity clientEntity) {
-		return clientRepository.save(clientEntity);
+	public ClientDTO save(ClientDTO clientDTO) {
+		ClientEntity clientEntity = mapClientDTOToEntity(clientDTO);
+		return mapClientEntityToDTO(clientRepository.save(clientEntity));
 	}
 
 	@Override
-	public ClientEntity findById(Long id) {
+	public ClientDTO findById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		Optional<ClientEntity> clientEntity = clientRepository.findById(id);
 		if (clientEntity.isPresent()) {
-			return clientEntity.get();
+			return mapClientEntityToDTO(clientEntity.get());
 		}
 		throw new IdUncorrectedRuntimeException(IdServiceUtil.UNCORRECTED_ID);
 	}
 
 	@Override
-	public List<ClientEntity> findAll() {
-		return clientRepository.findAll();
+	public List<ClientDTO> findAll() {
+		List<ClientEntity> clientEntities = clientRepository.findAll();
+		List<ClientDTO> clientDTOS = new ArrayList<>();
+		for (ClientEntity clientEntity : clientEntities) {
+			clientDTOS.add(mapClientEntityToDTO(clientEntity));
+		}
+		return clientDTOS;
 	}
 
 	@Override
 	@Transactional
-	public ClientEntity update(ClientEntity clientEntity) {
-		return entityManager.merge(clientEntity);
+	public ClientDTO update(ClientDTO clientDTO) {
+		ClientEntity clientEntity = mapClientDTOToEntity(clientDTO);
+		return mapClientEntityToDTO(entityManager.merge(clientEntity));
 	}
 
 	@Override
 	public void deleteById(Long id) {
 		IdServiceUtil.isIdPositive(id);
 		clientRepository.deleteById(id);
+	}
+
+	private ClientDTO mapClientEntityToDTO(ClientEntity clientEntity) {
+		return modelMapper.map(clientEntity, ClientDTO.class);
+	}
+
+	private ClientEntity mapClientDTOToEntity(ClientDTO clientDTO) {
+		return modelMapper.map(clientDTO, ClientEntity.class);
 	}
 }

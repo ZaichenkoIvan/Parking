@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.parking.entity.ClientEntity;
+import com.example.parking.domain.ClientDTO;
 import com.example.parking.service.ClientService;
 
 import lombok.AllArgsConstructor;
@@ -18,23 +18,23 @@ public class ClientController {
 	private final ClientService clientService;
 
 	@GetMapping("/")
-	public List<ClientEntity> showAll() {
+	public List<ClientDTO> showAll() {
 		return clientService.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public ClientEntity showById(@PathVariable("id") Long id) {
+	public ClientDTO showById(@PathVariable("id") Long id) {
 		return clientService.findById(id);
 	}
 
 	@PostMapping("/")
-	public ClientEntity create(@RequestBody ClientEntity clientEntity) {
-		return clientService.save(clientEntity);
+	public ClientDTO create(@RequestBody ClientDTO clientDTO) {
+		return clientService.save(clientDTO);
 	}
 
 	@PutMapping("/{id}")
-	public ClientEntity edit(@RequestBody ClientEntity clientEntity) {
-		return clientService.update(clientEntity);
+	public ClientDTO edit(@RequestBody ClientDTO clientDTO) {
+		return clientService.update(clientDTO);
 	}
 
 	@DeleteMapping("/{id}")
