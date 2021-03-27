@@ -15,7 +15,22 @@ INSERT INTO parking_spaces VALUES (2, 2);
 INSERT INTO parking_spaces VALUES (3, 1);
 INSERT INTO parking_spaces VALUES (4, 2);
 
-INSERT INTO coupons VALUES (1, 1, 1, '2021-04-03', '2021-04-05');
-INSERT INTO coupons VALUES (1, 1, 2, '2021-05-03', '2021-04-06');
-INSERT INTO coupons VALUES (1, 2, 3, '2021-06-03', '2021-04-07');
-INSERT INTO coupons VALUES (1, 2, 4, '2021-07-03', '2021-04-08');
+insert into coupons
+values
+(1, TO_DATE('2003/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'),
+ TO_DATE('2003/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'), 1, 1);
+
+insert into coupons
+values
+(2, TO_DATE('2015/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'),
+ TO_DATE('2015/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'), 1, 2);
+
+insert into coupons
+values
+(3, TO_DATE('2018/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'),
+ TO_DATE('2018/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'), 2, 3);
+
+insert into coupons
+values
+(4, TO_DATE('2020/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'),
+ TO_DATE('2020/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'), 2, 4);
