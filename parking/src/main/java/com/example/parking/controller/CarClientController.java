@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.parking.domain.CarClientDTO;
+import com.example.parking.domain.*;
 import com.example.parking.service.CarClientService;
 
 import lombok.AllArgsConstructor;
@@ -40,5 +40,15 @@ public class CarClientController {
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable("id") Long id) {
 		carClientService.deleteById(id);
+	}
+
+	@GetMapping("/findClients")
+	public List<ClientDTO> findClientsByCarName(@RequestParam String carName) {
+		return carClientService.findClientsByCarName(carName);
+	}
+
+	@GetMapping("/findCars")
+	public List<CarDTO> findCarsByClientName(@RequestParam String clientName) {
+		return carClientService.findCarsByClientName(clientName);
 	}
 }

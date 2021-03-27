@@ -1,8 +1,5 @@
 package com.example.parking.domain;
 
-import com.example.parking.entity.CarEntity;
-import com.example.parking.entity.ClientEntity;
-
 import lombok.*;
 
 
@@ -13,7 +10,7 @@ import lombok.*;
 public class CarClientDTO {
 	private Long id;
 
-	private CarEntity car;
+	private CarDTO car;
 
-	private ClientEntity client;
+	private ClientDTO client;
 }

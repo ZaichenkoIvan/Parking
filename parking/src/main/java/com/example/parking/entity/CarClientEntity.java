@@ -5,6 +5,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 
@@ -20,14 +22,14 @@ public class CarClientEntity {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
-	@OneToOne(cascade =  CascadeType.ALL,fetch = FetchType.EAGER, optional = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_car", referencedColumnName = "id")
 	private CarEntity car;
 
 
-	@OneToOne(cascade =  CascadeType.ALL,fetch = FetchType.EAGER, optional = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_client", referencedColumnName = "id")
 	private ClientEntity client;
 }

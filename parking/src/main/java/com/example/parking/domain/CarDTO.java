@@ -2,8 +2,6 @@ package com.example.parking.domain;
 
 import java.util.List;
 
-import com.example.parking.entity.CouponEntity;
-
 import lombok.*;
 
 
@@ -16,5 +14,5 @@ public class CarDTO {
 
 	private String name;
 
-	private List<CouponEntity> coupons;
+	private List<CouponDTO> coupons;
 }

@@ -2,7 +2,8 @@ package com.example.parking.service;
 
 import java.util.List;
 
-import com.example.parking.domain.CarClientDTO;
+import com.example.parking.domain.*;
+import com.example.parking.entity.CarClientEntity;
 
 
 public interface CarClientService {
@@ -15,4 +16,8 @@ public interface CarClientService {
 	CarClientDTO update(CarClientDTO carClientEntity);
 
 	void deleteById(Long id);
+
+	List<ClientDTO> findClientsByCarName(String carName);
+
+	List<CarDTO> findCarsByClientName(String clientName);
 }

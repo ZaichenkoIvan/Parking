@@ -6,6 +6,7 @@ INSERT INTO clients VALUES (2,'Stasya');
 
 INSERT INTO car_clients VALUES (1, 1, 1);
 INSERT INTO car_clients VALUES (2, 2, 2);
+INSERT INTO car_clients VALUES (3, 1, 2);
 
 INSERT INTO parkings VALUES (1, 'silpo');
 INSERT INTO parkings VALUES (2, 'atb');

@@ -2,8 +2,6 @@ package com.example.parking.domain;
 
 import java.util.List;
 
-import com.example.parking.entity.ParkingSpaceEntity;
-
 import lombok.*;
 
 
@@ -16,5 +14,5 @@ public class ParkingDTO {
 
 	private String name;
 
-	private List<ParkingSpaceEntity> parkingSpaces;
+	private List<ParkingSpaceDTO> parkingSpaces;
 }

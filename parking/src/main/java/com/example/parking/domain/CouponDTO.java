@@ -2,9 +2,6 @@ package com.example.parking.domain;
 
 import java.time.LocalDate;
 
-import com.example.parking.entity.CarEntity;
-import com.example.parking.entity.ParkingSpaceEntity;
-
 import lombok.*;
 
 
@@ -15,9 +12,9 @@ import lombok.*;
 public class CouponDTO {
 	private Long id;
 
-	private CarEntity car;
+	private CarDTO car;
 
-	private ParkingSpaceEntity parkingSpace;
+	private ParkingSpaceDTO parkingSpace;
 
 	private LocalDate startDate;
 
