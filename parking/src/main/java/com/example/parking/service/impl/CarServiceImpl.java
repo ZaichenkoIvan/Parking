@@ -57,6 +57,12 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
+	public CarDTO findByName(String name) {
+		CarEntity carEntity = carRepository.findByName(name).orElse(new CarEntity());
+		return mapCarEntityToDTO(carEntity);
+	}
+
+	@Override
 	@Transactional
 	public CarDTO update(CarDTO carDTO) {
 		CarEntity carEntity = mapCarDTOToEntity(carDTO);
@@ -68,6 +74,8 @@ public class CarServiceImpl implements CarService {
 		IdServiceUtil.isIdPositive(id);
 		carRepository.deleteById(id);
 	}
+
+
 
 	private CarDTO mapCarEntityToDTO(CarEntity carEntity) {
 		return modelMapper.map(carEntity, CarDTO.class);

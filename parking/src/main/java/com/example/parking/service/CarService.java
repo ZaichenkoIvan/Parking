@@ -12,6 +12,8 @@ public interface CarService {
 
 	List<CarDTO> findAll();
 
+	CarDTO findByName(String name);
+
 	CarDTO update(CarDTO carDTO);
 
 	void deleteById(Long id);

@@ -41,4 +41,9 @@ public class CarController {
 	public void delete(@PathVariable("id") Long id) {
 		carService.deleteById(id);
 	}
+
+	@PostMapping("/name/{id}")
+	public void findByName(@PathVariable("id") String name) {
+		carService.findByName(name);
+	}
 }
