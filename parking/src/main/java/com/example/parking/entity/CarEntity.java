@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "cars")
+@Table(name = "cars", indexes = { @Index(columnList = "name") })
 public class CarEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +22,6 @@ public class CarEntity {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "car")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "car")
 	private List<CouponEntity> coupons;
 }

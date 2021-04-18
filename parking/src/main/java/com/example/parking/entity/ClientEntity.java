@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "clients")
+@Table(name = "clients", indexes = { @Index(columnList = "name") })
 public class ClientEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

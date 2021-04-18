@@ -14,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "coupons")
+@Table(name = "coupons", indexes = { @Index(columnList = "start_date, end_date") })
 public class CouponEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
